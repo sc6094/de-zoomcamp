@@ -1,0 +1,19 @@
+docker build --help
+1.--iidfile
+
+docker run -it python:3.9 bash
+pip list
+2.3
+
+select count() from green_taxi_data where lpep_pickup_datetime::DATE='2019-01-15'and lpep_dropoff_datetime::DATE='2019-01-15'
+3.20530
+
+select lpep_pickup_datetime from green_taxi_data where trip_distance=(select max(trip_distance) from green_taxi_data)
+4. 2019-01-15
+
+select count() from green_taxi_data where passenger_count=2 and (lpep_pickup_datetime::DATE='2019-01-01' OR lpep_dropoff_datetime::DATE='2019-01-01')
+select count(*) from green_taxi_data where passenger_count=3 and (lpep_pickup_datetime::DATE='2019-01-01' OR lpep_dropoff_datetime::DATE='2019-01-01')
+5. 2: 1282 ; 3: 254
+
+select "Zone" from green_taxi_data as a join taxi_zone_lookup as b on a."DOLocationID" = b."LocationID" where tip_amount=(select max(tip_amount) from green_taxi_data as a join taxi_zone_lookup as b on a."PULocationID" = b."LocationID" where "Zone"='Astoria')
+6. Long Island City/Queens Plaza
