@@ -1,0 +1,38 @@
+
+
+CREATE OR REPLACE EXTERNAL TABLE `data-camp-375803.dezoomcamp.external_fhv_tripdata`
+OPTIONS (format = 'CSV', uris = ['gs://prefect_de_zoomcamp_jjay/data/fhv/fhv_tripdata_2019-*.csv.gz']);
+
+
+1. 43,244,696
+
+SELECT COUNT(*) FROM data-camp-375803.dezoomcamp.external_fhv_tripdata;
+
+2. 0 MB for the External Table and 317.94MB for the BQ Table
+
+CREATE OR REPLACE TABLE `data-camp-375803.dezoomcamp.fhv_tripdata_non_partitioned` AS
+SELECT * FROM data-camp-375803.dezoomcamp.external_fhv_tripdata;
+
+SELECT DISTINCT COUNT(Affiliated_base_number) FROM `data-camp-375803.dezoomcamp.fhv_tripdata_non_partitioned`;
+
+SELECT DISTINCT COUNT(Affiliated_base_number) FROM data-camp-375803.dezoomcamp.external_fhv_tripdata;
+
+3.717,748
+SELECT count(*) FROM `data-camp-375803.dezoomcamp.fhv_tripdata_non_partitioned` WHERE PUlocationID is NULL and DOlocationID is NULL;
+
+4.Partition by pickup_datetime Cluster on affiliated_base_number
+
+5.647.87 MB for non-partitioned table and 23.06 MB for the partitioned table
+SELECT DISTINCT Affiliated_base_number FROM data-camp-375803.dezoomcamp.fhv_tripdata_non_partitioned WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' and '2019-03-31';
+SELECT DISTINCT Affiliated_base_number FROM data-camp-375803.dezoomcamp.fhv_tripdata_partitioned_clustered WHERE DATE(pickup_datetime) BETWEEN '2019-03-01' and '2019-03-31';
+
+6.GCP Bucket
+CREATE OR REPLACE EXTERNAL TABLE `data-camp-375803.dezoomcamp.external_fhv_tripdata`
+OPTIONS (format = 'CSV', uris = ['gs://prefect_de_zoomcamp_jjay/data/fhv/fhv_tripdata_2019-*.csv.gz']);
+
+The storage location for this table is in Google Cloud Storage
+
+7.False
+
+Table with data size < 1 GB doesn't show significant improvement in performance with clustering or partitioning
+
