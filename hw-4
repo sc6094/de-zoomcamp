@@ -1,0 +1,17 @@
+1.61648442
+SELECT count(*) 
+FROM `data-camp-375803.production.fact_trips` 
+WHERE EXTRACT(YEAR FROM pickup_datetime)=2019 OR EXTRACT(YEAR FROM pickup_datetime)=2020
+
+2. 89.9/10.1
+
+3. 43244696
+SELECT count(*) 
+FROM `data-camp-375803.production.stg_fhv_tripdata` 
+WHERE EXTRACT(YEAR FROM pickup_datetime)=2019
+
+
+4. 22998722
+SELECT count(*) FROM `data-camp-375803.production.fact_fhv_trips` WHERE EXTRACT(YEAR FROM pickup_datetime)=2019
+
+5. January 
