@@ -1,4 +1,4 @@
-
+version: 2
 macros:
   - name: get_payment_type_description
     description: >
