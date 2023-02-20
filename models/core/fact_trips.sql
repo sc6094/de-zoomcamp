@@ -1,23 +1,28 @@
 {{ config(materialized='table') }}
 
-
 with green_data as (
-    select *, 'Green' as service_type from {{ ref('stg_green_tripdata')}}
-),
+    select *, 
+        'Green' as service_type 
+    from {{ ref('stg_green_tripdata') }}
+), 
 
 yellow_data as (
-    select *, 'Yellow' as service_type from {{ ref('stg_yellow_tripdata')}}
-),
+    select *, 
+        'Yellow' as service_type
+    from {{ ref('stg_yellow_tripdata') }}
+), 
 
 trips_unioned as (
-    select * from green_data union all select * from yellow_data
-),
+    select * from green_data
+    union all
+    select * from yellow_data
+), 
 
 dim_zones as (
-    select * from {{ ref('dim_zones') }} where borough != 'Unknown'
+    select * from {{ ref('dim_zones') }}
+    where borough != 'Unknown'
 )
-
-select
+select 
     trips_unioned.tripid, 
     trips_unioned.vendorid, 
     trips_unioned.service_type,
